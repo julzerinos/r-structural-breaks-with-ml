@@ -1,4 +1,4 @@
-mydata = read.csv("sample_data/Developed_6_Portfolios_ME_INV.csv")  # read csv file
+data = read.csv("sample_data/Developed_6_Portfolios_ME_INV.csv")  # read csv file
 
 # y(i, t) = [x(i, t) ^ t] x (B(i) + d(i) * I(t >= t0)) + e(i, t)
 #
@@ -32,9 +32,6 @@ B = cbind(c(4, 3, 2, 1))
 d = cbind(c(1, 1, 1, 1))
 I = 1
 
-
-
 e = .5
 
 y = x %*% (B + d * I) + e
-y
