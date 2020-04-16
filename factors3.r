@@ -19,11 +19,11 @@ t0 <- dim(train)[1]/2+10
 panels <- cbind(train$`Mkt-RF`,train$SMB,train$HML,train$RF)
 
 # OLS Estimator
-B = do.call("rbind", lapply(1:4, function(x) sample(c(1, rep(0, 3)), 1))) # solve(t(panels) %*% panels) %*% t(panels)
+B = do.call("rbind", lapply(1:4, function(x) runif(1))) # solve(t(panels) %*% panels) %*% t(panels)
+B
 
 # initial break point estimator
 Y = panels %*% B
-Y
 
 # get matrixes X and X_hat
 X <-panels[1:t0,1:4]
