@@ -32,3 +32,6 @@ X_t <- panels[t0:dim(panels)[1],1:4]
 # Recalculate OLS Estimators
 B_hat = solve(t(X) %*% X) %*% t(X) %*% Y[1:t0,1]
 B_tilde = solve(t(X_t) %*% X_t) %*% t(X_t) %*% Y[t0:dim(panels)[1],1]
+
+# plot
+qplot(seq_along(Y), Y, geom = "path", colour = Y)
