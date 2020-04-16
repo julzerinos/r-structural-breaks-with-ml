@@ -31,8 +31,28 @@ B_hat = solve(t(X) %*% X) %*% t(X) %*% Y[1:t0,1]
 B_tilde = solve(t(X_t) %*% X_t) %*% t(X_t) %*% Y[t0:dim(panels)[1],1]
 
 # plot
+<<<<<<< HEAD
 qplot(seq_along(Y), Y, geom = "path", colour = Y) + labs(
   title = "Break Point Estimator",
   subtitle = "Based on economic data from 1990 to 2020",
   x = "Time (Months)",
   y = "Estimation of break point")
+=======
+qplot(seq_along(Y), Y, geom = "path", colour = Y)
+
+# ----------------test data----------------
+
+# random t0
+t0_test <- sample(1:dim(test)[1], 1)
+panels_test <- cbind(test$`Mkt-RF`,test$SMB,test$HML,test$RF)
+
+# calculate Y using obtained OLS estimators
+Y_hat <- panels_test[1:t0_test,1:4] %*% B_hat
+Y_tilde <-panels_test[(t0_test+1):dim(panels_test)[1],1:4] %*% B_hat
+# merge obtained Ys
+Y_test <- rbind(Y_hat,Y_tilde)
+
+# plot
+qplot(seq_along(Y_test), Y_test, geom = "path", colour = Y_test)
+  
+>>>>>>> af79967ee99a1a7861a7041f0fc555d702e0563f
