@@ -1,5 +1,8 @@
 # Comments
 
+# Source
+# http://centaur.reading.ac.uk/79661/1/final-pdf-Antoch-et-al.pd
+
 # y(i, t) = [x(i, t) ^ t] x (B(i) + d(i) * I(t >= t0)) + e(i, t)
 #
 # Where 
@@ -26,3 +29,4 @@
 #   in ith panel, regression parameters changes as
 #   B(i+1) = B(i) + d(i)
 #   at unknown t0 (called change point or break point)
+

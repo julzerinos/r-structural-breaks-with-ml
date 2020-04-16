@@ -8,9 +8,6 @@ tresh <- floor(dim(Developed_3_Factors)[1] * 0.75)
 train <- Developed_3_Factors[1:tresh,1:4]
 test <- Developed_3_Factors[tresh:dim(Developed_3_Factors)[1],1:4]
 
-
-
-
 # some initial t0 in train
 t0 <- dim(train)[1]/2+10
 
@@ -34,4 +31,8 @@ B_hat = solve(t(X) %*% X) %*% t(X) %*% Y[1:t0,1]
 B_tilde = solve(t(X_t) %*% X_t) %*% t(X_t) %*% Y[t0:dim(panels)[1],1]
 
 # plot
-qplot(seq_along(Y), Y, geom = "path", colour = Y)
+qplot(seq_along(Y), Y, geom = "path", colour = Y) + labs(
+  title = "Break Point Estimator",
+  subtitle = "Based on economic data from 1990 to 2020",
+  x = "Time (Months)",
+  y = "Estimation of break point")
