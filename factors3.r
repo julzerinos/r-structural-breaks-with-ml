@@ -1,4 +1,5 @@
 library(readr)
+library(ggplot2)
 
 Developed_3_Factors <- read_csv("sample_data/Developed_3_Factors.csv", 
                                 col_types = cols(t = col_skip()))
@@ -16,8 +17,8 @@ t0 <- dim(train)[1]/2+10
 panels <- cbind(train$`Mkt-RF`,train$SMB,train$HML,train$RF)
 
 # OLS Estimator
-B = do.call("rbind", lapply(1:4, function(x) runif(1))) # solve(t(panels) %*% panels) %*% t(panels)
-B
+# B = do.call("rbind", lapply(1:4, function(x) runif(1))) # solve(t(panels) %*% panels) %*% t(panels)
+B = matrix(rnorm(16), 4)
 
 # initial break point estimator
 Y = panels %*% B
@@ -31,14 +32,11 @@ B_hat = solve(t(X) %*% X) %*% t(X) %*% Y[1:t0,1]
 B_tilde = solve(t(X_t) %*% X_t) %*% t(X_t) %*% Y[t0:dim(panels)[1],1]
 
 # plot
-<<<<<<< HEAD
 qplot(seq_along(Y), Y, geom = "path", colour = Y) + labs(
   title = "Break Point Estimator",
   subtitle = "Based on economic data from 1990 to 2020",
   x = "Time (Months)",
   y = "Estimation of break point")
-=======
-qplot(seq_along(Y), Y, geom = "path", colour = Y)
 
 # ----------------test data----------------
 
@@ -52,7 +50,10 @@ Y_tilde <-panels_test[(t0_test+1):dim(panels_test)[1],1:4] %*% B_hat
 # merge obtained Ys
 Y_test <- rbind(Y_hat,Y_tilde)
 
+panels
+B_hat
+Y_hat
+
 # plot
 qplot(seq_along(Y_test), Y_test, geom = "path", colour = Y_test)
   
->>>>>>> af79967ee99a1a7861a7041f0fc555d702e0563f
