@@ -6,7 +6,7 @@ library("bfast")
 library("zoo")
 library("strucchange")
 
-Developed_3_Factors <- read_csv("sample_data/Developed_3_Factors.csv")
+Developed_3_Factors <- read_csv("./sample_data/Developed_3_Factors.csv")
 
 Developed_3_Factors
 
@@ -62,7 +62,7 @@ plot(df$t, sapply(df$t, function(i){
 # strucchange date of change
 
 bp <- breakpoints(df$HML ~ 1)
-fac <- breakfactor(bp, breaks = 4 )
+fac <- breakfactor(bp, breaks = 2 )
 fm1 <- lm(df$HML ~ fac - 1)
 
 plot(bp)

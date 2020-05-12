@@ -9,7 +9,7 @@ Developed_3_Factors <- read_csv("sample_data/Developed_3_Factors.csv")
 
 df <- Developed_3_Factors[, 4]
 
-df
+df <-greece
 
 df <- as.ts(df)
 
