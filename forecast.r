@@ -1,13 +1,13 @@
-library("ggplot2")
 library("zoo")
 # install.packages('forecast', dependencies = TRUE)
 library(forecast)
 library(ggplot2)
-
+library("bfast")
 library(readxl)
+library("strucchange")
 pwt91 <- read_excel("sample_data/pwt91.xlsx", sheet = "Data")
 
-greece <- subset(pwt91,country=="Egypt",select = c("year","rgdpe"))
+greece <- subset(pwt91,countrycode=="RUS",select = c("year","rgdpe"))
 # remove rows with NA
 greece <- greece[complete.cases(greece),]
 
@@ -49,10 +49,11 @@ model <- lm(greece ~ 1)
 plot(greece)
 abline(model)
 # one step ahead prediction errors
-rec_residuals <- numeric(length(greece))
-for (i in 2:length(greece)){
-  rec_residuals[i-1] = predict.lm(model,greece[i])
-}
+
+#rec_residuals <- numeric(length(greece))
+#for (i in 2:length(greece)){
+#  rec_residuals[i-1] = predict.lm(model,greece[i])
+#}
   # calculate residual sum of squares
   
   rss =  sapply(5:(length(greece)-5), function(i) {
@@ -67,10 +68,7 @@ for (i in 2:length(greece)){
   rss <- ts(rss,start=start_year-1+5,frequency=1)
   #breakpoint <- min(rss)
   breakpoint <- time(rss)[which.min(rss)]
-  # local minimma
- # which(diff(sign(diff(rss)))==+2)+1
-  # combine timeseries with lag
-  
+ 
   
   
   plot(greece)
@@ -79,41 +77,19 @@ for (i in 2:length(greece)){
   lines(ts(predict(lm((greece[(breakpoint-start_year+1):length(greece)]) ~ 1)),start=breakpoint,freq=1),col='darkgreen',lwd=2)
 
 
+# stuff from paper
+  
+     bp.nile <- breakpoints(greece ~ 1)
+     nile.fac <- breakfactor(bp.nile, breaks = length(bp.nile$breakpoints) )
+     fm1.nile <- lm(greece ~ nile.fac - 1)
+     plot(bp.nile)
+     
+     plot(greece, ylab="RGDPE")
+    # abline(h= mean(greece),col='blue')
+      abline(v= breakpoint-1, lty=2, col='red')
+     lines(ts(predict(fm1.nile),start=start_year,freq=1), col='darkgreen',lwd=2)
 
 
 
 
 
-
-#https://robjhyndman.com/hyndsight/piecewise-linear-trends/
-x1 <- 1:length(y)
-fit <- auto.arima(y, xreg=x1)
-library(fpp)
-T <- length(greece)
-x1 <- seq(T)
-fit <- auto.arima(greece, xreg=x1)
-fc <- forecast(fit, xreg=T+seq(10))
-b0 <- coef(fit)["intercept"]
-b1 <- coef(fit)["x1"]
-t <- seq(T+10)
-trend <- ts(b0 + b1*t, start=start(greece))
-
-plot(fc, main="Linear trend with AR(1) errors")
-lines(trend, col='red')
-
-tau = 20
-fit <- auto.arima(y, xreg=cbind(x1, pmax(0,x1-tau)))
-
-x2 <- pmax(0, x1-30)
-x3 <- pmax(0, x1-32)
-fit <- auto.arima(greece, xreg=cbind(x1,x2,x3))
-fc <- forecast(fit,xreg=cbind(max(x1)+seq(10), max(x2)+seq(10), max(x3)+seq(10)))
-b0 <- coef(fit)["intercept"]
-b1 <- coef(fit)["x1"]
-b2 <- coef(fit)["x2"]
-b3 <- coef(fit)["x3"]
-trend <- ts(b0 + b1*t + b2*pmax(0,t-30) + b3*pmax(0,t-32),
-            start=start(greece))
-
-plot(fc, main="Piecewise linear trend with AR(1) errors")
-lines(trend, col='red')
