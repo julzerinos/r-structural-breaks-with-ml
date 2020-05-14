@@ -7,7 +7,7 @@ library(readxl)
 library("strucchange")
 pwt91 <- read_excel("sample_data/pwt91.xlsx", sheet = "Data")
 
-greece <- subset(pwt91,countrycode=="RUS",select = c("year","rgdpe"))
+  greece <- subset(pwt91,countrycode=="CHN",select = c("year","rgdpe"))
 # remove rows with NA
 greece <- greece[complete.cases(greece),]
 
@@ -16,9 +16,15 @@ greece <- greece[complete.cases(greece),]
 
 #start_year <-greece$year[1]
 greece <- ts(greece$rgdpe,start = greece$year[1], frequency=1)
-#greece <- Nile
+# greece <- Nile
 start_year = time(greece)[1]
 
+# calculating percentage growth in time
+prc <- sapply(1:length(greece)-1, function(i){
+  1-greece[i+1]/greece[i]
+})
+start_year = start_year + 1
+greece <- ts(unlist(prc, use.names=FALSE),start = start_year,frequency=1)
 
 plot(greece)
 # cusum and mosum for residuals (value - mean) 
@@ -88,8 +94,8 @@ abline(model)
     # abline(h= mean(greece),col='blue')
       abline(v= breakpoint-1, lty=2, col='red')
      lines(ts(predict(fm1.nile),start=start_year,freq=1), col='darkgreen',lwd=2)
-
-
+     ci_ts <- confint(bp.nile)
+     lines(ci_ts)
 
 
 
