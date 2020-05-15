@@ -7,7 +7,7 @@
   library("strucchange")
   pwt91 <- read_excel("sample_data/pwt91.xlsx", sheet = "Data")
   
-    greece <- subset(pwt91,countrycode=="YEM",select = c("year","rgdpe"))
+    greece <- subset(pwt91,countrycode=="SYR",select = c("year","rgdpe"))
   # remove rows with NA
   greece <- greece[complete.cases(greece),]
   
@@ -16,7 +16,7 @@
   
   #start_year <-greece$year[1]
   greece <- ts(greece$rgdpe,start = greece$year[1], frequency=1)
-  # greece <- Nile
+  # greece <- Nile  
   start_year = time(greece)[1]
   
   # calculating percentage growth in time
@@ -97,5 +97,21 @@
        ci_ts <- confint(bp.nile)
        lines(ci_ts)
   
-  
+         ## test the null hypothesis that the GDP growth remains constant
+         ## over the years
+         ## compute OLS-based CUSUM process and plot
+         ## with standard and alternative boundaries
+        #TODO: 4 plots combined with all efp tests  
+       ocus <- efp(greece ~ 1, type = "OLS-CUSUM")
+         
+         plot(ocus)
+         abline(v= breakpoint-1, lty=2, col='red')
+         plot(ocus, alpha = 0.01, alt.boundary = TRUE)
+         ## calculate corresponding test statistic
+         sctest(ocus)
+          
+         ## F statistics at 5% significance level
+         fs <- Fstats(greece ~ 1)
+         plot(fs)
+    
   
