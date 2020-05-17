@@ -1,8 +1,10 @@
   library("zoo")
-  library(ggplot2)
+  library(ggplot2) # graphing library
   #library("bfast")
-  library(readxl)
-  library("strucchange")
+  library(readxl) # reading excel files library
+  library("strucchange") # library implementing breakpoint analysis
+  library(ggfortify) # extension for ggplot time series graphing
+  
   
   # Read and transfrom data
   pwt91 <- read_excel("sample_data/pwt91.xlsx", sheet = "Data")
@@ -22,7 +24,7 @@
 
   
   # Plot the data and CUSUM & MOSUM 
-  plot(country_gdp)
+  autoplot(country_gdp) + labs(title="Percentage change of RGDP per year", x="year", y="percent in decimal")
   # cusum and mosum for residuals (value - mean) 
   #plot cumsum
   CUSUM = cumsum(country_gdp - mean(country_gdp))
