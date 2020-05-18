@@ -1,18 +1,18 @@
-  library("zoo") # time series library
-  library(ggplot2) # graphing library
-  library(readxl) # reading excel files library
-  library("strucchange") # library implementing breakpoint analysis
-  library(ggfortify) # extension for ggplot time series graphing
+  library(zoo)         # time series library
+  library(ggplot2)     # graphing library
+  library(readxl)      # reading excel files library
+  library(strucchange) # library implementing breakpoint analysis
+  library(ggfortify)   # extension for ggplot time series graphing
   
   
   # Read and transfrom data
   pwt91 <- read_excel("sample_data/pwt91.xlsx", sheet = "Data")
-  country_gdp <- subset(pwt91,countrycode=="RWA",select = c("year","rgdpe"))
+  country_gdp <- subset(pwt91,countrycode=="ZWE",select = c("year","rgdpe"))
   # remove rows with NA
   country_gdp <- country_gdp[complete.cases(country_gdp),]
   country_gdp <- ts(country_gdp$rgdpe,start = country_gdp$year[1], frequency=1)
   start_year = time(country_gdp)[1]
-  
+  autoplot(country_gdp) + labs(title="RGDP growth",x="year",y="RGDP value")
   
   # calculating percentage growth in time
   prc <- sapply(1:length(country_gdp)-1, function(i){
@@ -68,7 +68,7 @@
   # F statistics at 5% significance level, h=0.1 (partition size)
   fs <- Fstats(country_gdp ~ 1,from=0.1)
   plot(fs,main="F test")
-  
+  cat("Potential breakpoint form F test at:", time(country_gdp)[fs$breakpoint],"\n")
   
   # test the null hypothesis that the GDP growth remains constant over the years
   # compute OLS-based CUSUM & MOSUM process and plot
@@ -86,8 +86,13 @@
   
   # finding date of the breakpoint
   bp <- breakpoints(country_gdp ~ 1)
+  sapply(bp$breakpoints,function(i){cat("Breakpoint found at year:",time(country_gdp)[i],"\n")})
+  
+  # finding segmentation of the data
   bfac <- breakfactor(bp, breaks = length(bp$breakpoints))
+  # model
   fm <- lm(country_gdp ~ bfac - 1)
+  plot(bp)
   autoplot(bp)
   
   plot(country_gdp, ylab="RGDPE")
@@ -107,13 +112,14 @@
   re.seat <- efp(y ~ ylag1 + ylag3, data = gdp_lag, type = "RE")
   plot(re.seat)
   sctest(re.seat)
-  # F statistics
+  # F statistics        
   fs <- Fstats(y ~ ylag1 + ylag3, data = gdp_lag, from = 0.1)
   plot(fs)
+  cat("Potential breakpoint form F test (multivariable regression) at:", time(gdp_lag[,"y"])[fs$breakpoint],"\n")
   
   plot(gdp_lag[,"y"],main="Breapoint from F test",ylab="RGDP",xlab="year")
   abline(v=time(gdp_lag)[fs$breakpoint],col="red",lty=2)
-  
+  par(mfrow=c(1,1))
 
   
 
