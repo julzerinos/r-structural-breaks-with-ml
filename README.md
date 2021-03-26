@@ -1,14 +1,36 @@
 # Detecting Structural Breaks with Statistical Analysis in R
 
-*Kornel Skórka &*
-*Julian Szachowicz*
+## In a nutshell
 
-## Abstract
+Structural breaks in time series data indicate changes in long-term statistical trends. These may be detected with the help of simple machine learning/data analysis models such as regression. We use R to create the model and detect structural breaks in national economic GDP time series data.
 
-Economists and the financial brotherhood of the world has always taken analysis of breakpoints intime series of data seriously. There is no wonder in the fact that there is great focus on automated(algorithm-aided) detection of these breakpoints where human error and bias can greatly influence theoutcome of analysis.
+#### Key project files
+ 1. `r-structural-breaks-with-ml.Rproj` - rstudio project metadata.
+ 2. `mlw_breakpoints.r` - project source code.
 
-This paper aims to present a simple approach to breakpoint detection using the power of the statis-tical R programming language with fluctuation-based regression model parameter change analysis.
+## The project report
 
-We demonstrate the approach on percentage change of RGDP (Real Gross Domestic Product) forboth developing and developed countries (from 1950 to 2020 where applicable) based on the availabledata in the open source World Penn Tables.
+The project results had been analyzed and described in the project report which you may read below or on [Overleaf](https://www.overleaf.com/read/qmctskmqjgbr).
 
-Read the project report on [Overleaf](https://www.overleaf.com/read/qmctskmqjgbr).
+![01](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-01.jpg)
+![02](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-02.jpg)
+![03](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-03.jpg)
+![04](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-04.jpg)
+![05](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-05.jpg)
+![06](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-06.jpg)
+![07](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-07.jpg)
+![08](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-08.jpg)
+![09](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-09.jpg)
+![10](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-10.jpg)
+![11](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-11.jpg)
+![12](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-12.jpg)
+![13](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-13.jpg)
+![14](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-14.jpg)
+![15](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-15.jpg)
+![16](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-16.jpg)
+![17](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-17.jpg)
+![18](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-18.jpg)
+![19](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-19.jpg)
+![20](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-20.jpg)
+![21](https://raw.githubusercontent.com/julzerinos/r-structural-breaks-with-ml/assets/Structural_Breaks_in_Time_Series-21.jpg)
+
